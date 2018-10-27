@@ -5,7 +5,7 @@ defmodule Evercam do
     "https://media.evercam.io/v1" <> url
   end
 
-  def process_request_body(body), do: body
+  def process_request_body(body), do: body |> Poison.decode!
 
   def process_request_headers(headers) when is_map(headers) do
     Enum.into(headers, [])
