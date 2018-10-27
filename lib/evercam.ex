@@ -1,0 +1,2 @@
+defmodule Evercam do
+end
