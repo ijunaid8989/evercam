@@ -1,7 +1,7 @@
 defmodule Evercam.Auth do
   import AuthValidator
 
-  defstruct api_key: nil, api_id: nil, debug: false, host: "https://media.evercam.io/v1", agent: nil, requester_ip: nil, country: nil, country_code: nil
+  defstruct api_key: nil, api_id: nil, debug: false, agent: nil, requester_ip: nil, country: nil, country_code: nil
 
   def new(), do: %__MODULE__{}
   def new(params) do
