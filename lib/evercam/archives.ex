@@ -7,6 +7,12 @@ defmodule Evercam.Archives do
     |> received
   end
 
+  def get_archive(camera_id, archive_id, client) do
+    API.call(client, "/cameras/#{camera_id}/archives/#{archive_id}", :get)
+    |> API.handle_response
+    |> received
+  end
+
   defp received({:error, message, status_code, _headers}) do
     {:error, message, status_code}
   end
