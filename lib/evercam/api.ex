@@ -1,8 +1,8 @@
 defmodule Evercam.API do
   require Logger
 
-  def call(client, path, verb, params \\ %{}) do
-    with 0 <- map_size(client) do
+  def call(client \\ %{}, path, verb, params \\ %{}) do
+    with 0 <- map_size(client) && path != "/users" do
       {:error, "Valid client has not been passed."}
     else
       _ ->
