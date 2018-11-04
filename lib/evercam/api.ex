@@ -2,17 +2,12 @@ defmodule Evercam.API do
   require Logger
 
   def call(client \\ %{}, path, verb, params \\ %{}) do
-    with 0 <- map_size(client) && path != "/users" do
-      {:error, "Valid client has not been passed."}
-    else
-      _ ->
-        starting = DateTime.utc_now
-        values = Map.merge(client, params) |> Map.to_list
-        response = Evercam.request(verb, path, "", [], params: values)
-        finished = DateTime.utc_now
-        Logger.info "API Call Took: #{DateTime.diff(finished, starting)}"
-        response
-    end
+    starting = DateTime.utc_now
+    values = Map.merge(client, params) |> Map.to_list
+    response = Evercam.request(verb, path, "", [], params: values)
+    finished = DateTime.utc_now
+    Logger.info "API Call Took: #{DateTime.diff(finished, starting)}"
+    response
   end
 
   def handle_response({:error, struct}), do: {:error, "There was an error", struct}
