@@ -10,7 +10,7 @@ defmodule Evercam.API do
     response
   end
 
-  def handle_response({:error, struct}), do: {:error, "There was an error", struct}
+  def handle_response({:error, struct}), do: {:error, "There was an error", struct, ""}
   def handle_response({:ok, %{body: body, headers: headers, status_code: status_code}}) do
     with true <- is_nil(body) do
       message = "API call failed to return any data or contained data that could not be parsed."
