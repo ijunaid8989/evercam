@@ -10,7 +10,7 @@ defmodule Evercam.Users do
   def get_user_cameras(user, shared \\ false, thumbnail \\ false, client) do
     API.call(client, "/cameras", :get, %{
       include_shared: shared,
-      thumbnail: thumbnail, 
+      thumbnail: thumbnail,
       user_id: user
     })
     |> API.handle_response
