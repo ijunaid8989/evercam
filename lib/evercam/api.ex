@@ -1,5 +1,6 @@
 defmodule Evercam.API do
   require Logger
+  require IEx
 
   def call(client \\ %{}, path, verb, params \\ %{}) do
     starting = DateTime.utc_now
@@ -17,9 +18,19 @@ defmodule Evercam.API do
       {:error, message, status_code, headers}
     else
       _ ->
-        Poison.decode!(body)
-        |> handle_not_nil_response(status_code, headers)
+        parse_headers_body(headers, body, status_code)
     end
+  end
+
+  def parse_headers_body(headers, body, status_code) do
+    {_, type} = List.keyfind(headers, "Content-Type", 0)
+    what_will_retrun(type, body, status_code, headers)
+  end
+
+  defp what_will_retrun("image/jpeg", body, _status_code, _headers), do: body
+  defp what_will_retrun(_type , body, status_code, headers) do
+    Poison.decode!(body)
+    |> handle_not_nil_response(status_code, headers)
   end
 
   def handle_not_nil_response(%{"message" => message} = _body, status_code, headers) do
