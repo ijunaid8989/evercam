@@ -23,12 +23,12 @@ defmodule Evercam.API do
   end
 
   def parse_headers_body(headers, body, status_code) do
-    {_, type} = List.keyfind(headers, "Content-Type", 0)
-    what_will_retrun(type, body, status_code, headers)
+    List.keyfind(headers, "Content-Type", 0)
+    |> what_will_retrun(body, status_code, headers)
   end
 
-  defp what_will_retrun("image/jpeg", body, _status_code, _headers), do: body
-  defp what_will_retrun(_type , body, status_code, headers) do
+  defp what_will_retrun({_, "image/jpeg"}, body, _status_code, _headers), do: body
+  defp what_will_retrun({_, _type} , body, status_code, headers) do
     Poison.decode!(body)
     |> handle_not_nil_response(status_code, headers)
   end
